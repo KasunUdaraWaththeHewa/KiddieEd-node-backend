@@ -1,0 +1,36 @@
+{
+  "name": "kiddieed-node-backend",
+  "version": "1.0.0",
+  "description": "Kindergarten Learning System",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
+    "client": "npm run start --prefix ../KiddieEd-react-frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kORzix/KiddieEd-node-backend.git"
+  },
+  "keywords": [
+    "kids",
+    "education"
+  ],
+  "author": "kORzix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kORzix/KiddieEd-node-backend/issues"
+  },
+  "homepage": "https://github.com/kORzix/KiddieEd-node-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "concurrently": "^8.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.5",
+    "nodemon": "^3.0.1"
+  }
+}

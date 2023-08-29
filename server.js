@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8070;
 const URL = process.env.MONGODB_URL;
 
 //import routes
-const Routes = require('./src/api/routes');
+const Routes = require('./src/api/routes/index');
 
 //app midleware
 app.use(bodyParser.json());

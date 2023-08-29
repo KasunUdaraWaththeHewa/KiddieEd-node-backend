@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const LessonSchema = new mongoose.Schema(
   {
-    lessonId: { type: String, required: true },
-    displayName: { type: String, required: true },
-    image: { type: String, required: true },
+    lessonName: { type: String, required: true },
+    image: { type: String, required: false },
     payment: { type: String, required: true },
     category: { type: String, required: true },
   },

@@ -1,26 +1,26 @@
 const express = require('express');
-const Posts = require('../models/lesson');
+const Lessons = require('../models/lesson');
 
 const router = express.Router();
 
 //save posts
-router.post('/post/save',(req,res) => {
-    let newPost = new Posts(req.body);
-    newPost.save((err)=>{
+router.post('/lesson/add',(req,res) => {
+    let newLesson = new Lessons(req.body);
+    newLesson.save((err)=>{
         if(err){
             return res.status(400).json({
                 error:err
             });
         }
         return res.status(200).json({
-            success:"Posts saved successfully"
+            success:"Lesson added successfully"
         });
     });
 });
 
 //get posts
-router.get('/post',(req,res) => {
-    Posts.find().exec((err,posts) => {
+router.get('/lessons',(req,res) => {
+    Lessons.find().exec((err,lessons) => {
         if(err){
             return res.status(400).json({
                 error:err
@@ -28,14 +28,14 @@ router.get('/post',(req,res) => {
         }
         return res.status(200).json({
             success:true,
-            existingPosts:posts
+            existingLessons:lessons
         });
     });
 });
 
 //update posts
-router.put('/post/update/:id',(req,res) => {
-    Posts.findByIdAndUpdate(
+router.put('/lesson/update/:id',(req,res) => {
+    Lessons.findByIdAndUpdate(
         req.params.id,
         {
             $set:req.body
@@ -52,28 +52,29 @@ router.put('/post/update/:id',(req,res) => {
 });
 
 //delete posts
-router.delete('/post/delete/:id',(req,res) =>{
-    Posts.findByIdAndDelete(req.params.id).exec((err,deletePost) =>{
+router.delete('/lesson/delete/:id',(req,res) =>{
+    Lessons.findByIdAndDelete(req.params.id).exec((err,deleteLesson) =>{
         if(err) return res.status(400).json({
             message:"Delete unsuccessful",err
         });
         return res.json({
-            message:"Delete Successfull",deletePost
+            message:"Delete Successfull",deleteLesson
         });
     });
 });
 
 //get a specific post
-router.get("/post/:id",(req,res) =>{
-    let postId = req.params.id;
-    Posts.findById(postId,(err,post) =>{
+router.get("/lesson/:id",(req,res) =>{
+    let lessonId = req.params.id;
+    Lessons.findById(lessonId,(err,lesson) =>{
         if(err){
             return res.status(400).json({success:false,err});
         }
         return res.status(200).json({
             success:true,
-            post
+            lesson
         });
     });
 });
+
 module.exports = router;

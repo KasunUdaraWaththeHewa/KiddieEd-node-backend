@@ -15,6 +15,7 @@ const Routes = require('./src/api/routes/index');
 //app midleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static('public'));
 
 //route midleware
 app.use(Routes);

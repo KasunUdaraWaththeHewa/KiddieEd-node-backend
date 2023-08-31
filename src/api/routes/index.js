@@ -49,21 +49,50 @@ router.get("/lessons", (req, res) => {
 });
 
 //update posts
-router.put("/lesson/update/:id", (req, res) => {
-  Lessons.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: req.body,
-    },
-    (err, post) => {
-      if (err) {
-        return res.status(401).json({ error: err });
+router.put("/lesson/update/:id", upload.single("file"), (req, res) => {
+  if(req.file){
+    Lessons.findByIdAndUpdate(
+      req.params.id,
+      {
+        // $set: req.body,
+        // image: req.body.file,
+        image: req.file.filename,
+        lessonName: req.body.lessonName,
+        payment: req.body.payment,
+        category: req.body.category,
+      },
+      (err, post) => {
+        if (err) {
+          return res.status(401).json({ error: err });
+        }
+        return res.status(200).json({
+          success: "Updated Succesfully",
+        });
       }
-      return res.status(200).json({
-        success: "Updated Succesfully",
-      });
-    }
-  );
+    );
+  }else{
+    Lessons.findByIdAndUpdate(
+      req.params.id,
+      {
+        // $set: req.body,
+        // image: req.body.file,
+        // image: req.file.filename,
+        lessonName: req.body.lessonName,
+        payment: req.body.payment,
+        category: req.body.category,
+      },
+      (err, post) => {
+        if (err) {
+          return res.status(401).json({ error: err });
+        }
+        return res.status(200).json({
+          success: "Updated Succesfully",
+        });
+      }
+    );
+  }
+  
+  console.log(req.file);
 });
 
 //delete posts

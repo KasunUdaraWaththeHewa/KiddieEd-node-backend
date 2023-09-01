@@ -1,21 +1,39 @@
 const express = require("express");
-const lessonController = require("../controllers/lesson")
+const lessonController = require("../controllers/lesson");
+const path = require("path");
+const multer = require("multer");
 
 const router = express.Router();
 
-//save posts
-router.post("/lesson/add",lessonController.addLesson);
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 
-//get posts
+const upload = multer({
+  storage: storage,
+});
+
+//add lesson
+router.post("/lesson/add",upload.single("file") ,lessonController.addLesson);
+
+//get lessons
 router.get("/lessons", lessonController.getLessons);
 
-//update posts
-router.put("/lesson/update/:id",lessonController.updateLesson);
+//update lesson
+router.put("/lesson/update/:id",upload.single("file") ,lessonController.updateLesson);
 
-//delete posts
-router.delete("/lesson/delete/:id",lessonController.deleteLesson);
+//delete lesson
+router.delete("/lesson/delete/:id", lessonController.deleteLesson);
 
-//get a specific post
-router.get("/lesson/:id",lessonController.getSpecific);
+//get a specific lesson
+router.get("/lesson/:id", lessonController.getSpecificLesson);
 
 module.exports = router;

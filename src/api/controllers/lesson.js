@@ -18,8 +18,9 @@ const upload = multer({
   storage: storage,
 });
 
+//add lesson
 const addLesson = (req, res) => {
-  upload.single("file")
+  upload.single("file");
   Lessons.create({
     image: req.file.filename,
     lessonName: req.body.lessonName,
@@ -30,6 +31,7 @@ const addLesson = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+//get lessons
 const getLessons = (req, res) => {
   Lessons.find().exec((err, lessons) => {
     if (err) {
@@ -44,8 +46,9 @@ const getLessons = (req, res) => {
   });
 };
 
+//update lesson
 const updateLesson = (req, res) => {
-  upload.single("file")
+  upload.single("file");
   if (req.file) {
     Lessons.findByIdAndUpdate(
       req.params.id,
@@ -84,6 +87,7 @@ const updateLesson = (req, res) => {
   }
 };
 
+//delete lesson
 const deleteLesson = (req, res) => {
   Lessons.findByIdAndDelete(req.params.id).exec((err, deleteLesson) => {
     if (err)
@@ -98,6 +102,7 @@ const deleteLesson = (req, res) => {
   });
 };
 
+//get a specific lesson
 const getSpecificLesson = (req, res) => {
   let lessonId = req.params.id;
   Lessons.findById(lessonId, (err, lesson) => {

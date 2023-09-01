@@ -1,26 +1,7 @@
-const path = require("path");
-const multer = require("multer");
 const Lessons = require("../models/lesson");
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({
-  storage: storage,
-});
 
 //add lesson
 const addLesson = (req, res) => {
-  upload.single("file");
   Lessons.create({
     image: req.file.filename,
     lessonName: req.body.lessonName,
@@ -48,7 +29,7 @@ const getLessons = (req, res) => {
 
 //update lesson
 const updateLesson = (req, res) => {
-  upload.single("file");
+//   upload.single("file");
   if (req.file) {
     Lessons.findByIdAndUpdate(
       req.params.id,

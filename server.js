@@ -2,19 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const config = require('./src/configs/index');
 require('dotenv').config();
 
 const app = express();
 
 const PORT = process.env.PORT || 8070;
-const URL = process.env.MONGODB_URL;
+const URL = config.DB_CONNECTION_STRING;
 
 //import routes
-const Routes = require('./src/api/routes');
+const Routes = require('./src/api/routes/index');
 
 //app midleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static('public'));
 
 //route midleware
 app.use(Routes);

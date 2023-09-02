@@ -1,10 +1,10 @@
-const Lessons = require("../models/lesson");
+const Plans = require("../models/lesson-plans");
 
-//add lesson
-const addLesson = (req, res) => {
-  Lessons.create({
+//add Plan
+const addPlan = (req, res) => {
+  Plans.create({
     image: req.file.filename,
-    lessonName: req.body.lessonName,
+    planName: req.body.planName,
     payment: req.body.payment,
     category: req.body.category,
   })
@@ -12,9 +12,9 @@ const addLesson = (req, res) => {
     .catch((err) => console.log(err));
 };
 
-//get lessons
-const getLessons = (req, res) => {
-  Lessons.find().exec((err, lessons) => {
+//get Plans
+const getPlans = (req, res) => {
+  Plans.find().exec((err, plans) => {
     if (err) {
       return res.status(400).json({
         error: err,
@@ -22,20 +22,19 @@ const getLessons = (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      existingLessons: lessons,
+      existingPlans: plans,
     });
   });
 };
 
-//update lesson
-const updateLesson = (req, res) => {
-//   upload.single("file");
+//update Plan
+const updatePlan = (req, res) => {
   if (req.file) {
-    Lessons.findByIdAndUpdate(
+    Plans.findByIdAndUpdate(
       req.params.id,
       {
         image: req.file.filename,
-        lessonName: req.body.lessonName,
+        planName: req.body.planName,
         payment: req.body.payment,
         category: req.body.category,
       },
@@ -49,10 +48,10 @@ const updateLesson = (req, res) => {
       }
     );
   } else {
-    Lessons.findByIdAndUpdate(
+    Plans.findByIdAndUpdate(
       req.params.id,
       {
-        lessonName: req.body.lessonName,
+        planName: req.body.planName,
         payment: req.body.payment,
         category: req.body.category,
       },
@@ -68,9 +67,9 @@ const updateLesson = (req, res) => {
   }
 };
 
-//delete lesson
-const deleteLesson = (req, res) => {
-  Lessons.findByIdAndDelete(req.params.id).exec((err, deleteLesson) => {
+//delete Plan
+const deletePlan = (req, res) => {
+  Plans.findByIdAndDelete(req.params.id).exec((err, deletePlan) => {
     if (err)
       return res.status(400).json({
         message: "Delete unsuccessful",
@@ -78,29 +77,29 @@ const deleteLesson = (req, res) => {
       });
     return res.json({
       message: "Delete Successfull",
-      deleteLesson,
+      deletePlan,
     });
   });
 };
 
-//get a specific lesson
-const getSpecificLesson = (req, res) => {
-  let lessonId = req.params.id;
-  Lessons.findById(lessonId, (err, lesson) => {
+//get a specific Plan
+const getSpecificPlan = (req, res) => {
+  let planId = req.params.id;
+  Plans.findById(planId, (err, plan) => {
     if (err) {
       return res.status(400).json({ success: false, err });
     }
     return res.status(200).json({
       success: true,
-      lesson,
+      plan,
     });
   });
 };
 
 module.exports = {
-  addLesson,
-  getLessons,
-  updateLesson,
-  deleteLesson,
-  getSpecificLesson,
+  addPlan,
+  getPlans,
+  updatePlan,
+  deletePlan,
+  getSpecificPlan,
 };

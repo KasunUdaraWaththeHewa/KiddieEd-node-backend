@@ -1,5 +1,5 @@
 const express = require("express");
-const lessonController = require("../controllers/lesson");
+const plansController = require("../controllers/lesson-plans");
 const path = require("path");
 const multer = require("multer");
 
@@ -22,18 +22,18 @@ const upload = multer({
 });
 
 //add lesson
-router.post("/lesson/add",upload.single("file") ,lessonController.addLesson);
+router.post("/lesson-plans/add",upload.single("file") ,plansController.addPlan);
 
 //get lessons
-router.get("/lessons", lessonController.getLessons);
+router.get("/lesson-plans", plansController.getPlans);
 
 //update lesson
-router.put("/lesson/update/:id",upload.single("file") ,lessonController.updateLesson);
+router.put("/lesson-plans/update/:id",upload.single("file") ,plansController.updatePlan);
 
 //delete lesson
-router.delete("/lesson/delete/:id", lessonController.deleteLesson);
+router.delete("/lesson-plans/delete/:id", plansController.deletePlan);
 
 //get a specific lesson
-router.get("/lesson/:id", lessonController.getSpecificLesson);
+router.get("/lesson-plans/:id", plansController.getSpecificPlan);
 
 module.exports = router;

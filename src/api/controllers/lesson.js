@@ -8,7 +8,7 @@ const addLesson = (req, res) => {
     payment: req.body.payment,
     category: req.body.category,
   })
-    .then((result) => res.json(result))
+    .then(() => res.json({success: true}))
     .catch((err) => console.log(err));
 };
 

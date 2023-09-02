@@ -1,7 +1,9 @@
 const express = require("express");
-const plansController = require("../controllers/lesson-plans");
 const path = require("path");
 const multer = require("multer");
+
+const plansController = require("../controllers/lesson-plans");
+const sheetsController = require("../controllers/worksheets");
 
 const router = express.Router();
 
@@ -21,19 +23,56 @@ const upload = multer({
   storage: storage,
 });
 
-//add lesson
-router.post("/lesson-plans/add",upload.single("file") ,plansController.addPlan);
+/* ****************************** lesson plans start ************************************ */
+//add plan
+router.post(
+  "/lesson-plans/add",
+  upload.single("file"),
+  plansController.addPlan
+);
 
-//get lessons
+//get plans
 router.get("/lesson-plans", plansController.getPlans);
 
 //update lesson
-router.put("/lesson-plans/update/:id",upload.single("file") ,plansController.updatePlan);
+router.put(
+  "/lesson-plans/update/:id",
+  upload.single("file"),
+  plansController.updatePlan
+);
 
-//delete lesson
+//delete plan
 router.delete("/lesson-plans/delete/:id", plansController.deletePlan);
 
-//get a specific lesson
+//get a specific plan
 router.get("/lesson-plans/:id", plansController.getSpecificPlan);
+
+/* ****************************** lesson plans end ************************************ */
+
+/* ****************************** worsheets start ************************************ */
+//add worksheet
+router.post(
+  "/worksheets/add",
+  upload.single("file"),
+  sheetsController.addSheet
+);
+
+//get worksheets
+router.get("/worksheets", sheetsController.getSheets);
+
+//update worksheet
+router.put(
+  "/worksheets/update/:id",
+  upload.single("file"),
+  sheetsController.updateSheet
+);
+
+//delete worksheet
+router.delete("/worksheets/delete/:id", sheetsController.deleteSheet);
+
+//get a specific worksheet
+router.get("/worksheets/:id", sheetsController.getSpecificSheet);
+
+/* ****************************** worsheets end ************************************ */
 
 module.exports = router;

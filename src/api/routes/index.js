@@ -4,6 +4,9 @@ const multer = require("multer");
 
 const plansController = require("../controllers/lesson-plans");
 const sheetsController = require("../controllers/worksheets");
+const gamesController = require("../controllers/games");
+const lessonsController = require("../controllers/guided-lessons");
+const homesController = require("../controllers/home");
 
 const router = express.Router();
 
@@ -74,5 +77,83 @@ router.delete("/worksheets/delete/:id", sheetsController.deleteSheet);
 router.get("/worksheets/:id", sheetsController.getSpecificSheet);
 
 /* ****************************** worsheets end ************************************ */
+
+/* ****************************** games start ************************************ */
+//add game
+router.post(
+  "/games/add",
+  upload.single("file"),
+  gamesController.addGame
+);
+
+//get games
+router.get("/games", gamesController.getGames);
+
+//update game
+router.put(
+  "/games/update/:id",
+  upload.single("file"),
+  gamesController.updateGame
+);
+
+//delete game
+router.delete("/games/delete/:id", gamesController.deleteGame);
+
+//get a specific game
+router.get("/games/:id", gamesController.getSpecificGame);
+
+/* ****************************** games end ************************************ */
+
+/* ****************************** guided-lessons start ************************************ */
+//add guided-lesson
+router.post(
+  "/guid-lessons/add",
+  upload.single("file"),
+  lessonsController.addLesson
+);
+
+//get guided-lessons
+router.get("/guid-lessons", lessonsController.getLessons);
+
+//update guided-lesson
+router.put(
+  "/guid-lessons/update/:id",
+  upload.single("file"),
+  lessonsController.updateLesson
+);
+
+//delete guided-lesson
+router.delete("/guid-lessons/delete/:id", lessonsController.deleteLesson);
+
+//get a specific guided-lesson
+router.get("/guid-lessons/:id", lessonsController.getSpecificLesson);
+
+/* ****************************** guided-lessons end ************************************ */
+
+/* ****************************** homes start ************************************ */
+//add home
+router.post(
+  "/homes/add",
+  upload.single("file"),
+  homesController.addHome
+);
+
+//get homes
+router.get("/homes", homesController.getHomes);
+
+//update home
+router.put(
+  "/homes/update/:id",
+  upload.single("file"),
+  homesController.updateHome
+);
+
+//delete home
+router.delete("/homes/delete/:id", homesController.deleteHome);
+
+//get a specific home
+router.get("/homes/:id", homesController.getSpecificHome);
+
+/* ****************************** homes end ************************************ */
 
 module.exports = router;

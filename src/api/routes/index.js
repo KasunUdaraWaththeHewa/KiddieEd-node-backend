@@ -6,7 +6,6 @@ const plansController = require("../controllers/lesson-plans");
 const sheetsController = require("../controllers/worksheets");
 const gamesController = require("../controllers/games");
 const lessonsController = require("../controllers/guided-lessons");
-const homesController = require("../controllers/home");
 
 const router = express.Router();
 
@@ -129,31 +128,5 @@ router.delete("/guid-lessons/delete/:id", lessonsController.deleteLesson);
 router.get("/guid-lessons/:id", lessonsController.getSpecificLesson);
 
 /* ****************************** guided-lessons end ************************************ */
-
-/* ****************************** homes start ************************************ */
-//add home
-router.post(
-  "/homes/add",
-  upload.single("file"),
-  homesController.addHome
-);
-
-//get homes
-router.get("/homes", homesController.getHomes);
-
-//update home
-router.put(
-  "/homes/update/:id",
-  upload.single("file"),
-  homesController.updateHome
-);
-
-//delete home
-router.delete("/homes/delete/:id", homesController.deleteHome);
-
-//get a specific home
-router.get("/homes/:id", homesController.getSpecificHome);
-
-/* ****************************** homes end ************************************ */
 
 module.exports = router;

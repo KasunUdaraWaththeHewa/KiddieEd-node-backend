@@ -6,6 +6,7 @@ const plansController = require("../controllers/lesson-plans");
 const sheetsController = require("../controllers/worksheets");
 const gamesController = require("../controllers/games");
 const lessonsController = require("../controllers/guided-lessons");
+const userController = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -24,6 +25,39 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
 });
+
+/* ****************************** User start ************************************ */
+
+//login user
+router.post(
+  "/user/login",
+  userController.loginUser
+);
+
+//register user
+router.post(
+  "/user/register",
+  upload.single("file"),
+  userController.registerUser
+);
+
+//get users
+router.get("/user/", userController.getUser);
+
+// //update user
+// router.put(
+//   "/user/update/:id",
+//   upload.single("file"),
+//   userController.editUser
+// );
+
+// //delete user
+// router.delete("/user/delete/:id", userController.deleteUser);
+
+// //get a specific user
+// router.get("/user/:id", userController.getSpecificUser);
+
+/* ****************************** User end ************************************ */
 
 /* ****************************** lesson plans start ************************************ */
 //add plan
@@ -130,3 +164,5 @@ router.get("/guid-lessons/:id", lessonsController.getSpecificLesson);
 /* ****************************** guided-lessons end ************************************ */
 
 module.exports = router;
+
+

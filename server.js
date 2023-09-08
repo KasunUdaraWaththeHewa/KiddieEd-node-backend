@@ -4,8 +4,18 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./src/configs');
 require('dotenv').config();
+const session = require('express-session');
 
 const app = express();
+
+// Express session setup
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 const PORT = process.env.PORT || 8070;
 const URL = config.DB_CONNECTION_STRING;
@@ -17,6 +27,7 @@ const Routes = require('./src/api/routes');
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
+
 
 //route midleware
 app.use(Routes);

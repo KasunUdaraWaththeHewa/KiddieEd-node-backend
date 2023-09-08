@@ -58,6 +58,8 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ userEmail })
 
   if (user && (await bcrypt.compare(userPassword, user.userPassword))) {
+    req.session.userId = user._id;
+
     res.json({
       _id: user.id,
       userName: user.userName,
@@ -65,11 +67,26 @@ const loginUser = asyncHandler(async (req, res) => {
       userEmail: user.userEmail,
       token: generateToken(user._id),
     })
+
   } else {
     res.status(400)
     throw new Error('Invalid credentials')
   }
 })
+
+
+const logoutUser = (req, res) => {
+  // if (!req.session.userId) {
+  //   return res.status(401).json({ success: false, message: 'already logged out' });
+  // }
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ success: true, message: 'Logout successful' });
+  });
+};
 
 // @desc    Get user data
 // @route   GET /users/
@@ -77,6 +94,11 @@ const loginUser = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
+
+const authenticate = (req, res) => {
+  const isAuthenticated = !!req.session.userId; // Check if a session exists
+  res.json({ isAuthenticated });
+}
 
 // Generate JWT
 const generateToken = (id) => {
@@ -88,5 +110,7 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
   getUser,
+  authenticate,
 }

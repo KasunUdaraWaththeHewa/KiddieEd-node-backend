@@ -41,8 +41,13 @@ router.post(
   userController.registerUser
 );
 
+router.post(
+  "/user/logout",
+  userController.logoutUser
+);
+
 //get users
-router.get("/user/", userController.getUser);
+router.get("/user", userController.getUser);
 
 // //update user
 // router.put(
@@ -56,6 +61,8 @@ router.get("/user/", userController.getUser);
 
 // //get a specific user
 // router.get("/user/:id", userController.getSpecificUser);
+
+router.get('/user/check-session', userController.authenticate);
 
 /* ****************************** User end ************************************ */
 

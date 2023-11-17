@@ -6,7 +6,7 @@ const plansController = require("../controllers/lesson-plans");
 const sheetsController = require("../controllers/worksheets");
 const gamesController = require("../controllers/games");
 const lessonsController = require("../controllers/guided-lessons");
-const userController = require("../controllers/userController");
+const {signupUser, loginUser,changePassword} = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -29,44 +29,51 @@ const upload = multer({
 /* ****************************** User start ************************************ */
 
 //login user
-router.post(
-  "/user/login",
-  userController.loginUser
-);
-
-//register user
-router.post(
-  "/user/register",
-  upload.single("file"),
-  userController.registerUser
-);
-
-router.post(
-  "/user/logout",
-  userController.logoutUser
-);
-
-//get users
-router.get("/user", userController.getUser);
-
-// //update user
-// router.put(
-//   "/user/update/:id",
-//   upload.single("file"),
-//   userController.editUser
+// router.post(
+//   "/user/login",
+//   userController.loginUser
 // );
 
-// //delete user
-// router.delete("/user/delete/:id", userController.deleteUser);
+// //register user
+// router.post(
+//   "/user/register",
+//   upload.single("file"),
+//   userController.registerUser
+// );
 
-// //get a specific user
-// router.get("/user/:id", userController.getSpecificUser);
+// router.post(
+//   "/user/logout",
+//   userController.logoutUser
+// );
 
-router.get('/user/check-session', userController.authenticate);
+// //get users
+// router.get("/user", userController.getUser);
 
-/* ****************************** User end ************************************ */
+// // //update user
+// // router.put(
+// //   "/user/update/:id",
+// //   upload.single("file"),
+// //   userController.editUser
+// // );
 
-/* ****************************** lesson plans start ************************************ */
+// // //delete user
+// // router.delete("/user/delete/:id", userController.deleteUser);
+
+// // //get a specific user
+// // router.get("/user/:id", userController.getSpecificUser);
+
+// router.get('/user/check-session', userController.authenticate);
+
+// /* ****************************** User end ************************************ */
+
+// /* ****************************** lesson plans start ************************************ */
+//User routes
+router.post('/login', loginUser);
+
+router.post('/signup', signupUser);
+
+router.post('/changepassword', changePassword);
+
 //add plan
 router.post(
   "/lesson-plans/add",

@@ -1,44 +1,43 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const config = require('./src/configs');
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 require('dotenv').config();
-const session = require('express-session');
 
 const app = express();
-
-// Express session setup
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
-const PORT = process.env.PORT || 8070;
-const URL = config.DB_CONNECTION_STRING;
-
-//import routes
-const Routes = require('./src/api/routes/');
-
-//app midleware
+const PORT=process.env.PORT || 8070;
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true, //access-control-allow-credentials:true
+  };
+  
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.use(cors());
-app.use(express.static('public'));
 
-
-//route midleware
-app.use(Routes);
-
-mongoose.set('strictQuery', false);
-mongoose.connect(URL).then(()=>{
-    console.log('🔄 DB connected');
-}).catch((err)=>{
-    console.log(`⚠️ DB connection error: ${err.message}`)
+const URL=process.env.MONGODB_URL;
+mongoose.connect(URL,{
+    //useCreateIndex:true,
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+    //useFindAndModify:false
 });
+const connection=mongoose.connection;
+connection.once("open",()=>{
+    console.log("MongoDB Connection Success!");
+})
 
-app.listen(PORT,() => {
-    console.log(`🚀 Server is up and running on PORT ${PORT}`);
-});
+const gamesRouter=require("./src/api/routes/gamesRoutes.js");
+app.use("/games",gamesRouter);
+const guidedLessonsRouter=require("./src/api/routes/guidedLessonsRoutes.js");
+app.use("/guidedLessons",guidedLessonsRouter);
+const lessonPlansRouter=require("./src/api/routes/lessonPlansRoutes.js");
+app.use("/lessonPlans",lessonPlansRouter);
+const worksheetsRouter=require("./src/api/routes/worksheetsRoutes.js");
+app.use("/worksheets",worksheetsRouter);
+const userRoutes=require("./src/api/routes/user.js");
+app.use("/user",userRoutes);
+
+
+app.listen(PORT,()=>{
+    console.log(`Server is up and running on port: ${PORT}`);
+})

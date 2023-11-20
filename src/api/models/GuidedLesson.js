@@ -12,4 +12,4 @@ const LessonSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("lessons",LessonSchema);
+module.exports = mongoose.model("guidedLesson",LessonSchema);

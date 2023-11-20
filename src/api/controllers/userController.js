@@ -21,6 +21,8 @@ const loginUser = async (req, res) => {
 
 const signupUser = async (req, res) => {
     const { email, password, name, role } = req.body;
+    console.log("sign up controller")
+    console.log({email, password, name, role})
     try {
         const user = await User.signup({email, password, name, role});
         const token = createToken(user._id, user.role);

@@ -12,4 +12,4 @@ const PlanSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("lesson-plans", PlanSchema);
+module.exports = mongoose.model("lessonPlan", PlanSchema);

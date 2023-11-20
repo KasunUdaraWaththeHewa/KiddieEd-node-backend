@@ -12,4 +12,4 @@ const WorksheetSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("worksheets", WorksheetSchema);
+module.exports = mongoose.model("worksheet", WorksheetSchema);
